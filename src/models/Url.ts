@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema, Model } from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 
 const urlSchema = new mongoose.Schema(
   {
