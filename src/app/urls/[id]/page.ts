@@ -18,5 +18,4 @@ export default async function urlRedirect({
   }
 
   redirect("/404");
-  return null;
 }
