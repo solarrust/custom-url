@@ -14,8 +14,7 @@
     "mongoose": "^8.7.0",
     "next": "14.2.14",
     "react": "^18",
-    "react-dom": "^18",
-    "shortid": "^2.2.16"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -24,6 +23,7 @@
     "@types/shortid": "^0.0.32",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
+    "nanoid": "^5.0.7",
     "typescript": "^5"
   }
 }

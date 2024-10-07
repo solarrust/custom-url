@@ -1,5 +1,5 @@
 import UrlRepository from "@/repositories/UrlRepository";
-import shortid from "shortid"; // TODO: change to nanoid
+import { nanoid } from "nanoid";
 
 export class UrlShortenerService {
   private urlRepository;
@@ -16,11 +16,11 @@ export class UrlShortenerService {
       return url.shortUrl;
     }
 
-    let shortUrl = shortid();
+    let shortUrl = nanoid(5);
     url = await this.urlRepository.getUrlByShortUrl(shortUrl);
 
     while (url) {
-      shortUrl = shortid();
+      shortUrl = nanoid(5);
       url = await this.urlRepository.getUrlByShortUrl(shortUrl);
     }
 
