@@ -29,7 +29,7 @@ export default class UrlRepository {
   }
 
   async createUrl(originalUrl: string, shortUrl: string): Promise<IURL> {
-    return await this.urlModel.create({ originalUrl, shortUrl, visits: 0 });
+    return await this.urlModel.create({ originalUrl, shortUrl });
   }
 
   //TODO: Add updateUrl method
