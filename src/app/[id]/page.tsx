@@ -12,7 +12,7 @@ export default async function urlRedirect({
 }: {
   params: { id: string };
 }) {
-  const original = await fetchOriginalUrl(`urls/${params.id}`);
+  const original = await fetchOriginalUrl(`/${params.id}`);
   if (original) {
     redirect(original);
   }

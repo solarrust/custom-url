@@ -12,6 +12,10 @@ const urlSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    visits: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
@@ -19,6 +23,7 @@ const urlSchema = new mongoose.Schema(
 export interface IURL extends Document {
   originalUrl: string;
   shortUrl: string;
+  visits: number;
 }
 
 const URL: Model<IURL> =
