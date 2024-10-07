@@ -8,12 +8,11 @@ interface CopyButtonProps {
 }
 
 export default function CopyButton({ url }: CopyButtonProps) {
-  const [copyText, setCopyText] = useState(url);
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(copyText);
+      await navigator.clipboard.writeText(url);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
