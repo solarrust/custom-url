@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { shortenUrl } from "./serverActions/ShortenUrlAction";
+import CopyButton from "./components/CopyButton";
 
 async function fetchUrls() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/urls`, {
@@ -60,6 +61,9 @@ export default async function Home() {
                       <a href={`${url.shortUrl}`} target="_blank">
                         {`${process.env.NEXT_PUBLIC_BASE_URL}${url.shortUrl}`}
                       </a>
+                      <CopyButton
+                        url={`${process.env.NEXT_PUBLIC_BASE_URL}${url.shortUrl}`}
+                      />
                     </td>
                     <td>0</td>
                   </tr>
