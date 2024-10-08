@@ -3,7 +3,9 @@ import CopyButton from "./components/CopyButton";
 import DeleteButton from "./components/DeleteButton";
 
 async function fetchUrls() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/urls`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/urls`, {
+    cache: "force-cache",
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch urls");
