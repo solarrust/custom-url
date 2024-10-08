@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
 
@@ -25,6 +26,7 @@ export default async function Urls() {
   return (
     <div>
       <h1>All custom URLs</h1>
+      <Link href="/">Home</Link>
       <table style={{ width: "100%" }}>
         <thead>
           <tr>
