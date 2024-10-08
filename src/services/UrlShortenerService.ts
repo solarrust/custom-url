@@ -44,4 +44,13 @@ export class UrlShortenerService {
   async deleteUrlById(id: string) {
     return await this.urlRepository.deleteUrl(id);
   }
+
+  async incrementVisitsCount(id: string) {
+    const url = await this.urlRepository.getUrlById(id);
+    if (url) {
+      return await this.urlRepository.updateUrl(id, {
+        visits: url.visits + 1,
+      });
+    }
+  }
 }

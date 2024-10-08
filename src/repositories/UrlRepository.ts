@@ -32,5 +32,9 @@ export default class UrlRepository {
     return await this.urlModel.create({ originalUrl, shortUrl });
   }
 
-  //TODO: Add updateUrl method
+  async updateUrl(id: string, data: Partial<IURL>): Promise<IURL | null> {
+    return await this.urlModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .lean();
+  }
 }

@@ -26,21 +26,21 @@ export default async function Home() {
 
   return (
     <>
-      <h1>Short URL</h1>
+      <h1>Customise URL</h1>
       <form action={shortenUrl}>
         <input type="text" placeholder="Enter URL" name="OriginalUrl" />
         <button type="submit">Short URL</button>
       </form>
 
       <div>
-        <h1>All short URLs</h1>
+        <h1>All custom URLs</h1>
         <Link href="/">Home</Link>
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
               <th>Original URL</th>
               <th>Short URL</th>
-              <th>Clicked</th>
+              <th>Visits</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +50,7 @@ export default async function Home() {
                   _id: string;
                   originalUrl: string;
                   shortUrl: string;
-                  clicked: number;
+                  visits: number;
                 }) => (
                   <tr key={url._id}>
                     <td>
@@ -67,7 +67,7 @@ export default async function Home() {
                       />
                       <DeleteButton id={url._id} />
                     </td>
-                    <td>0</td>
+                    <td>{url.visits}</td>
                   </tr>
                 )
               )}
