@@ -13,7 +13,7 @@ export async function GET() {
   const response = NextResponse.json({ urls });
   response.headers.set(
     "Cache-control",
-    "public, max-age=200, s-maxage=200, stale-while-revalidate=59"
+    "private, max-age=10, s-maxage=10, stale-while-revalidate=10"
   );
 
   return response;
