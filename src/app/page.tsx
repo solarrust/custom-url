@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { shortenUrl } from "./serverActions/ShortenUrlAction";
 import CopyButton from "./components/CopyButton";
 import DeleteButton from "./components/DeleteButton";
