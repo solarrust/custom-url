@@ -34,7 +34,6 @@ export default async function Home() {
 
       <div>
         <h1>All custom URLs</h1>
-        <Link href="/">Home</Link>
         <table style={{ width: "100%" }}>
           <thead>
             <tr>
