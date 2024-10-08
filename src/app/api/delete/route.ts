@@ -7,7 +7,6 @@ export async function DELETE(req: Request) {
   const shortenerService = new UrlShortenerService();
   const response = await shortenerService.getUrlById(id);
   await shortenerService.deleteUrlById(id);
-  console.log(response?.originalUrl);
   return NextResponse.json(
     { message: `Delete ${response?.originalUrl}` },
     { status: 200 }
