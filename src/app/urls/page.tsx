@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
