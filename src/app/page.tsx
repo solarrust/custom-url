@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { shortenUrl } from "./serverActions/ShortenUrlAction";
 import CopyButton from "./components/CopyButton";
-import { deleteUrl } from "./serverActions/DeleteUrlAction";
 import DeleteButton from "./components/DeleteButton";
 
 async function fetchUrls() {
