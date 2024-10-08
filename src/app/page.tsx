@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { shortenUrl } from "./serverActions/ShortenUrlAction";
 import CopyButton from "./components/CopyButton";
+import { deleteUrl } from "./serverActions/DeleteUrlAction";
+import DeleteButton from "./components/DeleteButton";
 
 async function fetchUrls() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/urls`, {
@@ -64,6 +66,7 @@ export default async function Home() {
                       <CopyButton
                         url={`${process.env.NEXT_PUBLIC_BASE_URL}${url.shortUrl}`}
                       />
+                      <DeleteButton id={url._id} />
                     </td>
                     <td>0</td>
                   </tr>
