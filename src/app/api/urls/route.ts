@@ -1,12 +1,11 @@
 import { UrlShortenerService } from "@/services/UrlShortenerService";
 import { NextResponse } from "next/server";
-import { cache } from "react";
 
-const fetchUrls = cache(async () => {
+const fetchUrls = async () => {
   const shortenerService = new UrlShortenerService();
   const urls = await shortenerService.getAllUrls();
   return urls;
-});
+};
 
 export async function GET() {
   const urls = await fetchUrls();
