@@ -1,5 +1,5 @@
 import UrlRepository from "@/repositories/UrlRepository";
-import { nanoid } from "nanoid";
+import { customAlphabet } from "nanoid";
 
 export class UrlShortenerService {
   private urlRepository;
@@ -7,26 +7,35 @@ export class UrlShortenerService {
     this.urlRepository = new UrlRepository();
   }
 
-  async shortenUrl(originalUrl?: string): Promise<string> {
+  async shortenUrl(
+    originalUrl?: string,
+    shortPart?: string | null
+  ): Promise<string> {
     if (!originalUrl) {
       return "";
     }
+
     let url = await this.urlRepository.getUrlByOriginalUrl(originalUrl);
     if (url) {
       return url.shortUrl;
     }
 
-    let shortUrl = nanoid(5);
-    url = await this.urlRepository.getUrlByShortUrl(shortUrl);
+    let shortUrl = shortPart;
 
-    while (url) {
-      shortUrl = nanoid(5);
+    if (!shortPart) {
+      const nanoid = customAlphabet(originalUrl.replace(/\W/g, ""), 5);
+      shortUrl = nanoid();
       url = await this.urlRepository.getUrlByShortUrl(shortUrl);
+
+      while (url) {
+        shortUrl = nanoid();
+        url = await this.urlRepository.getUrlByShortUrl(shortUrl);
+      }
     }
 
     await this.urlRepository.createUrl(originalUrl, `/${shortUrl}`);
 
-    return shortUrl;
+    return shortUrl || "";
   }
 
   async getAllUrls() {

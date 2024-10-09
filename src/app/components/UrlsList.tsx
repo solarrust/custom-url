@@ -1,5 +1,6 @@
 import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
+import ErrorAlert from "./ErrorAlert";
 
 async function fetchUrls() {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);
@@ -12,57 +13,76 @@ async function fetchUrls() {
 }
 
 export default async function UrlsList() {
-  let urls;
+  let urls = null;
+  let error: Error | null = null;
 
   try {
     urls = await fetchUrls();
-  } catch (error) {
-    return <div className="error">{(error as Error).message}</div>;
+  } catch (err) {
+    error = err as Error;
   }
 
   return (
-    <div>
-      <h1>All custom URLs</h1>
-      <table style={{ width: "100%" }}>
-        <thead>
-          <tr>
-            <th>Original URL</th>
-            <th>Short URL</th>
-            <th>Visits</th>
-          </tr>
-        </thead>
-        <tbody>
-          {urls.urls &&
-            urls.urls
-              .toReversed()
-              .map(
-                (url: {
-                  _id: string;
-                  originalUrl: string;
-                  shortUrl: string;
-                  visits: number;
-                }) => (
-                  <tr key={url._id}>
-                    <td>
-                      <a href={`${url.originalUrl}`} target="_blank">
-                        {url.originalUrl}
-                      </a>
-                    </td>
-                    <td>
-                      <a href={`${url.shortUrl}`} target="_blank">
-                        {`${process.env.BASE_URL}${url.shortUrl}`}
-                      </a>
-                      <CopyButton
-                        url={`${process.env.BASE_URL}${url.shortUrl}`}
-                      />
-                      <DeleteButton id={url._id} />
-                    </td>
-                    <td>{url.visits}</td>
-                  </tr>
-                )
-              )}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <h2 className="text-center">All custom URLs</h2>
+
+      {error ? (
+        <ErrorAlert error={error} />
+      ) : (
+        <table className="table max-w-full table-pin-rows">
+          <thead>
+            <tr>
+              <th>Original URL</th>
+              <th>Custom URL</th>
+              <th className="text-end">Visits</th>
+            </tr>
+          </thead>
+          <tbody>
+            {urls.urls &&
+              urls.urls
+                .toReversed()
+                .map(
+                  (url: {
+                    _id: string;
+                    originalUrl: string;
+                    shortUrl: string;
+                    visits: number;
+                  }) => (
+                    <tr key={url._id}>
+                      <td>
+                        <div
+                          className="tooltip tooltip-bottom"
+                          data-tip={url.originalUrl}
+                        >
+                          <a
+                            href={`${url.originalUrl}`}
+                            target="_blank"
+                            className="underline-offset-4"
+                          >
+                            {url.originalUrl.slice(0, 55).concat("...")}
+                          </a>
+                        </div>
+                      </td>
+                      <td className="flex gap-x-2 items-end">
+                        <a
+                          href={`${url.shortUrl}`}
+                          target="_blank"
+                          className="link link-primary underline-offset-4"
+                        >
+                          {`${process.env.BASE_URL}${url.shortUrl}`}
+                        </a>
+                        <CopyButton
+                          url={`${process.env.BASE_URL}${url.shortUrl}`}
+                        />
+                        <DeleteButton id={url._id} />
+                      </td>
+                      <td className="text-end font-bold">{url.visits}</td>
+                    </tr>
+                  )
+                )}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 }

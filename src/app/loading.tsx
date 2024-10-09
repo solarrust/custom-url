@@ -1,7 +1,5 @@
+import Loading from "./components/Loading";
+
 export default function loading() {
-  return (
-    <>
-      <h1>Loading...</h1>
-    </>
-  );
+  return <Loading />;
 }
