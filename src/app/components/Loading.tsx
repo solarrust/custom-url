@@ -10,6 +10,8 @@ export default function Loading() {
             src="./icon.svg"
             alt="Fox icon"
             className="max-w-full max-h-full"
+            width={96}
+            height={96}
           />
         </div>
         <h1 className="font-bold text-3xl tracking-wide">Loading...</h1>
