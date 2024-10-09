@@ -3,7 +3,7 @@ import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
 
 async function fetchUrls() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/urls`);
+  const response = await fetch(`${process.env.BASE_URL}/api/urls`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch urls");
@@ -50,10 +50,10 @@ export default async function Urls() {
                   </td>
                   <td>
                     <a href={`${url.shortUrl}`} target="_blank">
-                      {`${process.env.NEXT_PUBLIC_BASE_URL}${url.shortUrl}`}
+                      {`${process.env.BASE_URL}${url.shortUrl}`}
                     </a>
                     <CopyButton
-                      url={`${process.env.NEXT_PUBLIC_BASE_URL}${url.shortUrl}`}
+                      url={`${process.env.BASE_URL}${url.shortUrl}`}
                     />
                     <DeleteButton id={url._id} />
                   </td>
