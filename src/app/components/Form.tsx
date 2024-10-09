@@ -15,7 +15,7 @@ export default function Form() {
     try {
       shortenUrl(formData).finally(() => {
         form.reset();
-        setIsAdded(false), 2000;
+        setTimeout(() => setIsAdded(false), 2000);
       });
     } catch (err) {
       setError(err as Error);
