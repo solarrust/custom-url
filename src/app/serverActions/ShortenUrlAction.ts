@@ -6,5 +6,5 @@ export const shortenUrl = async (formData: FormData) => {
   const originalUrl: string = formData.get("OriginalUrl") as string;
   const shortenerService = new UrlShortenerService();
   await shortenerService.shortenUrl(originalUrl);
-  revalidatePath("/urls");
+  revalidatePath("/");
 };

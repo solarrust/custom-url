@@ -1,5 +1,5 @@
+import UrlsList from "./components/UrlsList";
 import { shortenUrl } from "./serverActions/ShortenUrlAction";
-import Link from "next/link";
 
 export default async function Home() {
   return (
@@ -10,7 +10,7 @@ export default async function Home() {
         <button type="submit">Short URL</button>
       </form>
 
-      <Link href="/urls">All URLs</Link>
+      <UrlsList />
     </>
   );
 }

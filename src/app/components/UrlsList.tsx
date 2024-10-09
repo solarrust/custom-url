@@ -1,4 +1,3 @@
-import Link from "next/link";
 import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
 
@@ -12,7 +11,7 @@ async function fetchUrls() {
   return response.json();
 }
 
-export default async function Urls() {
+export default async function UrlsList() {
   let urls;
 
   try {
@@ -24,7 +23,6 @@ export default async function Urls() {
   return (
     <div>
       <h1>All custom URLs</h1>
-      <Link href="/">Home</Link>
       <table style={{ width: "100%" }}>
         <thead>
           <tr>
