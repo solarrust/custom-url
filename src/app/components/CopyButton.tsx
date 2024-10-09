@@ -24,7 +24,7 @@ export default function CopyButton({ url }: CopyButtonProps) {
       {isCopied ? (
         <DoneSharpIcon className="fill-success" />
       ) : (
-        <ContentCopySharpIcon className="fill-success/30 hover:fill-success-content" />
+        <ContentCopySharpIcon className="fill-success/30 hover:fill-success" />
       )}
     </button>
   );

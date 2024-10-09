@@ -58,7 +58,7 @@ export default function Form() {
         </label>
         <button type="submit" className="btn btn-active btn-primary w-28">
           {isAdded ? (
-            <span className="loading loading-ball loading-md"></span>
+            <span className="loading loading-ball loading-md text-center"></span>
           ) : (
             "Whoosh!"
           )}

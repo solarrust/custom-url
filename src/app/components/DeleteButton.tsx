@@ -14,12 +14,14 @@ export default function DeleteButton({ id }: { id: string }) {
   }
 
   return (
-    <button onClick={handleDelete}>
+    <>
       {isDeleted ? (
-        <span className="loading loading-ball loading-xs text-error"></span>
+        <span className="loading loading-ball loading-md text-error"></span>
       ) : (
-        <DeleteIcon className="fill-red-700/30 hover:fill-red-700" />
+        <button onClick={handleDelete}>
+          <DeleteIcon className="fill-red-700/30 hover:fill-red-700" />
+        </button>
       )}
-    </button>
+    </>
   );
 }
