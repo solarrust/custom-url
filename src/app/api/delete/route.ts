@@ -1,5 +1,4 @@
 import { UrlShortenerService } from "@/services/UrlShortenerService";
-import { NextResponse } from "next/server";
 
 export async function DELETE(req: Request) {
   const { id } = await req.json();
@@ -7,7 +6,7 @@ export async function DELETE(req: Request) {
   const shortenerService = new UrlShortenerService();
   const response = await shortenerService.getUrlById(id);
   await shortenerService.deleteUrlById(id);
-  return NextResponse.json(
+  return Response.json(
     { message: `Delete ${response?.originalUrl}` },
     { status: 200 }
   );

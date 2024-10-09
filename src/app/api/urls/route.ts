@@ -1,5 +1,7 @@
 import { UrlShortenerService } from "@/services/UrlShortenerService";
-import { NextResponse } from "next/server";
+
+export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 const fetchUrls = async () => {
   const shortenerService = new UrlShortenerService();
@@ -9,11 +11,8 @@ const fetchUrls = async () => {
 
 export async function GET() {
   const urls = await fetchUrls();
-  const response = NextResponse.json({ urls });
-  response.headers.set(
-    "Cache-control",
-    "private, max-age=10, s-maxage=10, stale-while-revalidate=10"
-  );
+  const response = Response.json({ urls });
+  response.headers.set("Cache-control", "no-store");
 
   return response;
 }
