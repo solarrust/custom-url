@@ -9,5 +9,6 @@ export default {
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
     require("daisyui"),
+    require("@mui/material"),
   ],
 } satisfies Config;

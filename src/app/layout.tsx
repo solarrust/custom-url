@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <SpeedInsights />
-      <body className="min-h-[100dvh]">{children}</body>
+      <body className="min-h-[100dvh] grid body">{children}</body>
     </html>
   );
 }

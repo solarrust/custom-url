@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-.tooltip {
+::selection {
+  @apply bg-primary/50 text-white;
+}
+
+.body {
+  grid-template-rows: 1fr auto;
+}
+
+.custom-tooltip {
   @apply break-words;
+}
+
+.btn-icon:focus-visible {
+  @apply outline-current outline-offset-2 outline rounded-sm leading-none;
+}
+
+.link {
+  @apply underline-offset-4;
+}
+
+.link:focus-visible {
+  @apply outline-current outline-offset-4 outline rounded-sm;
 }

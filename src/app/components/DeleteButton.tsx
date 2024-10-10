@@ -14,14 +14,16 @@ export default function DeleteButton({ id }: { id: string }) {
   }
 
   return (
-    <>
+    <button
+      onClick={handleDelete}
+      disabled={isDeleted}
+      className="flex ml-auto btn-icon text-red-700/30 hover:text-red-700 focus-visible:text-red-700"
+    >
       {isDeleted ? (
-        <span className="loading loading-ball loading-md text-error"></span>
+        <span className="loading loading-ball loading-md text-red-700"></span>
       ) : (
-        <button onClick={handleDelete}>
-          <DeleteIcon className="fill-red-700/30 hover:fill-red-700" />
-        </button>
+        <DeleteIcon />
       )}
-    </>
+    </button>
   );
 }

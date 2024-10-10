@@ -12,6 +12,14 @@ async function fetchUrls() {
   return response.json();
 }
 
+function showOriginalUrl(url: string) {
+  if (url.length <= 65) {
+    return url;
+  }
+
+  return url.slice(0, 55).concat("...");
+}
+
 export default async function UrlsList() {
   let urls = null;
   let error: Error | null = null;
@@ -24,17 +32,17 @@ export default async function UrlsList() {
 
   return (
     <>
-      <h2 className="text-center">All custom URLs</h2>
+      <h2 className="text-center mt-16">All custom URLs</h2>
 
       {error ? (
         <ErrorAlert error={error} />
       ) : (
-        <table className="table max-w-full table-pin-rows">
-          <thead>
+        <table className="table max-w-full table-pin-rows text-lg">
+          <thead className="max-sm:hidden">
             <tr>
               <th>Original URL</th>
-              <th>Custom URL</th>
-              <th className="text-end">Visits</th>
+              <th className="text-center">Custom URL</th>
+              <th className="text-center">Visits</th>
             </tr>
           </thead>
           <tbody>
@@ -48,35 +56,40 @@ export default async function UrlsList() {
                     shortUrl: string;
                     visits: number;
                   }) => (
-                    <tr key={url._id}>
-                      <td>
+                    <tr
+                      key={url._id}
+                      className="max-sm:grid max-sm:justify-items-start"
+                    >
+                      <td className="w-[40%] max-sm:max-w-full max-sm:w-full max-sm:overflow-hidden">
                         <div
-                          className="tooltip tooltip-bottom"
+                          className="sm:tooltip sm:tooltip-bottom custom-tooltip"
                           data-tip={url.originalUrl}
                         >
                           <a
                             href={`${url.originalUrl}`}
                             target="_blank"
-                            className="underline-offset-4"
+                            className="link"
                           >
-                            {url.originalUrl.slice(0, 55).concat("...")}
+                            {showOriginalUrl(url.originalUrl)}
                           </a>
                         </div>
                       </td>
-                      <td className="flex gap-x-2 items-end">
+                      <td className="text-center">
                         <a
                           href={`${url.shortUrl}`}
                           target="_blank"
-                          className="link link-primary underline-offset-4"
+                          className="link link-primary"
                         >
                           {`${process.env.BASE_URL}${url.shortUrl}`}
                         </a>
                         <CopyButton
                           url={`${process.env.BASE_URL}${url.shortUrl}`}
                         />
+                      </td>
+                      <td className="text-center font-bold">{url.visits}</td>
+                      <td className="text-end">
                         <DeleteButton id={url._id} />
                       </td>
-                      <td className="text-end font-bold">{url.visits}</td>
                     </tr>
                   )
                 )}

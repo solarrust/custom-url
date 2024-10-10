@@ -25,9 +25,9 @@ export default function Form() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex items-center gap-x-2 justify-center m-14"
+        className="flex items-center gap-x-2 justify-center mt-6 mb-24 max-sm:flex-wrap"
       >
-        <label className="form-control w-full max-w-xs">
+        <label className="form-control max-w-xs basis-40 flex-grow">
           <div className="label">
             <span className="label-text">Enter URL</span>
           </div>
@@ -42,7 +42,7 @@ export default function Form() {
             <span className="label-text-alt">Required</span>
           </div>
         </label>
-        <label className="form-control w-max max-w-xs">
+        <label className="form-control w-max max-w-24">
           <div className="label">
             <span className="label-text">Short part</span>
           </div>
@@ -50,13 +50,16 @@ export default function Form() {
             type="text"
             placeholder="/Funny"
             name="ShortPart"
-            className="input input-bordered input-primary w-24 max-w-xs"
+            className="input input-bordered input-primary w-full"
           />
           <div className="label">
             <span className="label-text-alt">Optional</span>
           </div>
         </label>
-        <button type="submit" className="btn btn-active btn-primary w-28">
+        <button
+          type="submit"
+          className="btn btn-active btn-primary w-28 max-sm:w-full"
+        >
           {isAdded ? (
             <span className="loading loading-ball loading-md text-center"></span>
           ) : (

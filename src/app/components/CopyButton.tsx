@@ -20,11 +20,14 @@ export default function CopyButton({ url }: CopyButtonProps) {
     }
   };
   return (
-    <button onClick={handleCopy}>
+    <button
+      onClick={handleCopy}
+      className="btn-icon text-success/30 hover:text-success focus-visible:text-success ml-2"
+    >
       {isCopied ? (
         <DoneSharpIcon className="fill-success" />
       ) : (
-        <ContentCopySharpIcon className="fill-success/30 hover:fill-success" />
+        <ContentCopySharpIcon />
       )}
     </button>
   );
