@@ -18,8 +18,9 @@ async function fetchFilteredUrls(query: string, filter: string) {
   let filteredUrls = data.urls;
 
   if (filter) {
-    filteredUrls = data.urls.sort((a: any, b: any) =>
-      filter === `visits-asc` ? a.visits - b.visits : b.visits - a.visits
+    filteredUrls = data.urls.sort(
+      (a: { visits: number }, b: { visits: number }) =>
+        filter === `visits-asc` ? a.visits - b.visits : b.visits - a.visits
     );
   }
 
