@@ -2,8 +2,9 @@ import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
 import ErrorAlert from "./ErrorAlert";
 import Search from "./Search";
+import TableFilter from "./TableFilter";
 
-async function fetchFilteredUrls(query: string) {
+async function fetchFilteredUrls(query: string, filter: string) {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);
 
   if (!response.ok) {
@@ -12,13 +13,22 @@ async function fetchFilteredUrls(query: string) {
 
   const data = await response.json();
 
-  if (query === "") return data.urls;
+  if (query === "" && filter === "") return data.urls;
 
-  const filteredUrls = data.urls.filter(
-    (url: { originalUrl: string; shortUrl: string }) =>
-      url.originalUrl.includes(query) || url.shortUrl.includes(query)
-  );
-  console.log({ filteredUrls });
+  let filteredUrls = data.urls;
+
+  if (filter) {
+    filteredUrls = data.urls.sort((a: any, b: any) =>
+      filter === `visits-asc` ? a.visits - b.visits : b.visits - a.visits
+    );
+  }
+
+  if (query) {
+    filteredUrls = data.urls.filter(
+      (url: { originalUrl: string; shortUrl: string }) =>
+        url.originalUrl.includes(query) || url.shortUrl.includes(query)
+    );
+  }
 
   return filteredUrls;
 }
@@ -31,12 +41,18 @@ function showOriginalUrl(url: string) {
   return url.slice(0, 55).concat("...");
 }
 
-export default async function UrlsList({ query }: { query: string }) {
+export default async function UrlsList({
+  query,
+  filter,
+}: {
+  query: string;
+  filter: string;
+}) {
   let urls = null;
   let error: Error | null = null;
 
   try {
-    urls = await fetchFilteredUrls(query);
+    urls = await fetchFilteredUrls(query.toLowerCase(), filter);
   } catch (err) {
     error = err as Error;
   }
@@ -57,7 +73,9 @@ export default async function UrlsList({ query }: { query: string }) {
             <tr>
               <th>Original URL</th>
               <th className="text-center">Custom URL</th>
-              <th className="text-center">Visits</th>
+              <th className="text-center">
+                <TableFilter name={"Visits"} sortParam={"visits"} />
+              </th>
             </tr>
           </thead>
           <tbody>
