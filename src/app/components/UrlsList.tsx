@@ -1,15 +1,26 @@
 import CopyButton from "../components/CopyButton";
 import DeleteButton from "../components/DeleteButton";
 import ErrorAlert from "./ErrorAlert";
+import Search from "./Search";
 
-async function fetchUrls() {
+async function fetchFilteredUrls(query: string) {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch urls");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  if (query === "") return data.urls;
+
+  const filteredUrls = data.urls.filter(
+    (url: { originalUrl: string; shortUrl: string }) =>
+      url.originalUrl.includes(query) || url.shortUrl.includes(query)
+  );
+  console.log({ filteredUrls });
+
+  return filteredUrls;
 }
 
 function showOriginalUrl(url: string) {
@@ -20,12 +31,12 @@ function showOriginalUrl(url: string) {
   return url.slice(0, 55).concat("...");
 }
 
-export default async function UrlsList() {
+export default async function UrlsList({ query }: { query: string }) {
   let urls = null;
   let error: Error | null = null;
 
   try {
-    urls = await fetchUrls();
+    urls = await fetchFilteredUrls(query);
   } catch (err) {
     error = err as Error;
   }
@@ -33,6 +44,10 @@ export default async function UrlsList() {
   return (
     <>
       <h2 className="text-center mt-16">All custom URLs</h2>
+
+      <div className="flex justify-end">
+        <Search placeholder="Search by URL" />
+      </div>
 
       {error ? (
         <ErrorAlert error={error} />
@@ -46,8 +61,8 @@ export default async function UrlsList() {
             </tr>
           </thead>
           <tbody>
-            {urls.urls &&
-              urls.urls
+            {urls &&
+              urls
                 .toReversed()
                 .map(
                   (url: {
