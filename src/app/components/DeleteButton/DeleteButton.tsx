@@ -20,7 +20,7 @@ export default function DeleteButton({ id }: { id: string }) {
       className="flex ml-auto btn-icon text-red-700/30 hover:text-red-700 focus-visible:text-red-700"
     >
       {isDeleted ? (
-        <span className="loading loading-ball loading-md text-red-700"></span>
+        <span className="loading loading-ball loading-md text-red-700" data-testid="delete-loader"></span>
       ) : (
         <DeleteIcon />
       )}

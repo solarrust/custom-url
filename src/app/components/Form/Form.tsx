@@ -61,7 +61,7 @@ export default function Form() {
           className="btn btn-active btn-primary w-28 max-sm:w-full"
         >
           {isAdded ? (
-            <span className="loading loading-ball loading-md text-center"></span>
+            <span className="loading loading-ball loading-md text-center" data-testid="submit-loader"></span>
           ) : (
             "Whoosh!"
           )}

@@ -17,6 +17,7 @@ export default function CopyButton({ url }: CopyButtonProps) {
       setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy text:", err);
+      setIsCopied(false);
     }
   };
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function ErrorAlert({ error }: { error: Error }) {
+  if (error === null || error === undefined) return null;
   return (
     <div className="flex justify-center">
       <div role="alert" className="alert alert-error max-w-md">
