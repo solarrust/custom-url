@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { deleteUrl } from "../serverActions/DeleteUrlAction";
+import { deleteUrl } from "../../serverActions/DeleteUrlAction";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function DeleteButton({ id }: { id: string }) {

@@ -1,8 +1,8 @@
-import CopyButton from "../components/CopyButton";
-import DeleteButton from "../components/DeleteButton";
-import ErrorAlert from "./ErrorAlert";
-import Search from "./Search";
-import TableFilter from "./TableFilter";
+import CopyButton from "../CopyButton/CopyButton";
+import DeleteButton from "../DeleteButton/DeleteButton";
+import ErrorAlert from "../ErrorAlert/ErrorAlert";
+import Search from "../Search/Search";
+import TableFilter from "../TableFilter/TableFilter";
 
 async function fetchFilteredUrls(query: string, filter: string) {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);

@@ -1,7 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
-import { shortenUrl } from "../serverActions/ShortenUrlAction";
-import ErrorAlert from "./ErrorAlert";
+import { shortenUrl } from "../../serverActions/ShortenUrlAction";
+import ErrorAlert from "../ErrorAlert/ErrorAlert";
 
 export default function Form() {
   const [isAdded, setIsAdded] = useState(false);

@@ -1,6 +1,6 @@
-import Footer from "./components/Footer";
-import Form from "./components/Form";
-import UrlsList from "./components/UrlsList";
+import Footer from "./components/Footer/Footer";
+import Form from "./components/Form/Form";
+import UrlsList from "./components/UrlsList/UrlsList";
 
 export default async function Home({
   searchParams,
