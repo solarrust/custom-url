@@ -7,19 +7,20 @@ export default function Form() {
   const [isAdded, setIsAdded] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
     setIsAdded(true);
     try {
-      shortenUrl(formData).finally(() => {
-        form.reset();
-        setTimeout(() => setIsAdded(false), 2000);
-      });
+      await shortenUrl(formData);
+      form.reset();
+      setTimeout(() => setIsAdded(false), 2000);
     } catch (err) {
       setError(err as Error);
-    }
+      setIsAdded(false);
+      console.error(`Failed to shorten URL: ${err}`);
+    } 
   }
   return (
     <>
@@ -61,13 +62,16 @@ export default function Form() {
           className="btn btn-active btn-primary w-28 max-sm:w-full"
         >
           {isAdded ? (
-            <span className="loading loading-ball loading-md text-center" data-testid="submit-loader"></span>
+            <span
+              className="loading loading-ball loading-md text-center"
+              data-testid="submit-loader"
+            ></span>
           ) : (
             "Whoosh!"
           )}
         </button>
       </form>
-      {error ? <ErrorAlert error={error} /> : null}
+      {error ? <ErrorAlert error={error} /> : ""}
     </>
   );
 }

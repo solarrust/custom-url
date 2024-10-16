@@ -1,53 +1,45 @@
-/*
-TODO: Fix the test cases
-*/
+import React from "react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
+import DeleteButton from "./DeleteButton";
+import { deleteUrl } from "../../serverActions/DeleteUrlAction";
+import { vi, Mock } from "vitest";
 
-// import React from "react";
-// import {
-//   render,
-//   fireEvent,
-//   waitFor,
-//   cleanup,
-//   screen,
-// } from "@testing-library/react";
-// import DeleteButton from "./DeleteButton";
-// import { describe, beforeEach, it, expect, afterEach, vi } from "vitest";
+vi.mock("../../serverActions/DeleteUrlAction");
 
-// vi.mock("@/serverActions/DeleteUrlAction");
-// const mockDeleteUrl = vi.fn();
+describe("DeleteButton", () => {
+  const mockDeleteUrl = deleteUrl as Mock;
 
-// describe("DeleteButton", () => {
-//   beforeEach(() => {
-//     vi.clearAllMocks();
-//   });
+  beforeEach(() => {
+    mockDeleteUrl.mockClear();
+  });
 
-//   afterEach(() => {
-//     cleanup();
-//   });
+  it("should handle delete action successfully", async () => {
+    mockDeleteUrl.mockResolvedValueOnce({ success: true });
 
-//   it("should delete the URL and show loading indicator", async () => {
-//     mockDeleteUrl.mockResolvedValueOnce({});
-//     const { getByRole } = render(<DeleteButton id="123" />);
+    const { getByRole, getByTestId } = render(<DeleteButton id="123" />);
+    const button = getByRole("button");
 
-//     const button = getByRole("button");
-//     fireEvent.click(button);
+    fireEvent.click(button);
 
-//     expect(button).toBeDisabled();
-//     expect(screen.getByTestId("delete-loader")).toBeInTheDocument();
+    expect(button).toBeDisabled();
+    expect(getByTestId("delete-loader")).toBeInTheDocument();
 
-//     await waitFor(() => {
-//       expect(button).toBeDisabled();
-//     });
-//   });
+    expect(mockDeleteUrl).toHaveBeenCalledWith("123");
+  });
 
-//   it("should handle delete URL failure", async () => {
-//     mockDeleteUrl.mockRejectedValueOnce(new Error("Failed to delete"));
-//     const { getByRole } = render(<DeleteButton id="123" />);
+  it("should handle delete action failure", async () => {
+    mockDeleteUrl.mockRejectedValueOnce(new Error("Delete failed"));
 
-//     const button = getByRole("button");
-//     fireEvent.click(button);
+    const { getByRole, getByTestId } = render(<DeleteButton id="123" />);
+    const button = getByRole("button");
 
-//     expect(button).toBeDisabled();
-//     expect(screen.getByTestId("delete-loader")).toBeInTheDocument();
-//   });
-// });
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(button).toBeDisabled();
+      expect(getByTestId("delete-loader")).toBeInTheDocument();
+
+      expect(mockDeleteUrl).toHaveBeenCalledWith("123");
+    });
+  });
+});

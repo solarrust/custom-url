@@ -6,11 +6,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 export default function DeleteButton({ id }: { id: string }) {
   const [isDeleted, setIsDeleted] = useState(false);
 
-  function handleDelete() {
+  async function handleDelete() {
     setIsDeleted(true);
-    deleteUrl(id).finally(() => {
+    try {
+      await deleteUrl(id);
       setTimeout(() => setIsDeleted(false), 2000);
-    });
+    } catch (err) {
+      console.error(`Failed to delete URL: ${err}`);
+      setIsDeleted(false);
+    }
   }
 
   return (
@@ -20,7 +24,10 @@ export default function DeleteButton({ id }: { id: string }) {
       className="flex ml-auto btn-icon text-red-700/30 hover:text-red-700 focus-visible:text-red-700"
     >
       {isDeleted ? (
-        <span className="loading loading-ball loading-md text-red-700" data-testid="delete-loader"></span>
+        <span
+          className="loading loading-ball loading-md text-red-700"
+          data-testid="delete-loader"
+        ></span>
       ) : (
         <DeleteIcon />
       )}

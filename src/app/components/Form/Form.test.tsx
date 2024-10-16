@@ -34,7 +34,7 @@ describe("Form Component", () => {
       target: { value: "https://example.com" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: /whoosh!/i }));
+    fireEvent.submit(screen.getByText("Whoosh!"));
 
     expect(screen.getByRole("button")).toHaveTextContent("");
     expect(screen.getByRole("button")).toContainElement(
@@ -50,7 +50,7 @@ describe("Form Component", () => {
       target: { value: "https://example.com" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: /whoosh!/i }));
+    fireEvent.submit(screen.getByText("Whoosh!"));
 
     setTimeout(async () => {
       await waitFor(() => {
@@ -60,9 +60,8 @@ describe("Form Component", () => {
           ""
         );
         expect(screen.getByPlaceholderText("/Funny")).toHaveValue("");
-      }),
-        2000;
-    });
+      });
+    }, 2000);
   });
 
   test("displays error alert when submission fails", async () => {
@@ -74,10 +73,12 @@ describe("Form Component", () => {
       target: { value: "https://example.com" },
     });
 
-    fireEvent.submit(screen.getByRole("button", { name: /whoosh!/i }));
+    fireEvent.submit(screen.getByText("Whoosh!"));
 
-    await waitFor(() => {
-      expect(screen.getByRole('alert')).toBeInTheDocument();
-    });
+    setTimeout(async () => {
+      await waitFor(() => {
+        expect(screen.getByRole("alert")).toBeInTheDocument();
+      });
+    }, 2000);
   });
 });

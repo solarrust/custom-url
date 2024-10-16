@@ -4,7 +4,7 @@ import ErrorAlert from "../ErrorAlert/ErrorAlert";
 import Search from "../Search/Search";
 import TableFilter from "../TableFilter/TableFilter";
 
-async function fetchFilteredUrls(query: string, filter: string) {
+async function fetchFilteredUrls(filter: string, query?: string) {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);
 
   if (!response.ok) {
@@ -13,7 +13,7 @@ async function fetchFilteredUrls(query: string, filter: string) {
 
   const data = await response.json();
 
-  if (query === "" && filter === "") return data.urls;
+  if (filter === "" && !query) return data.urls;
 
   let filteredUrls = data.urls;
 
@@ -35,15 +35,15 @@ async function fetchFilteredUrls(query: string, filter: string) {
 }
 
 function showOriginalUrl(url: string) {
-  if (url.length <= 65) {
+  if (url.length <= 40) {
     return url;
   }
 
-  return url.slice(0, 55).concat("...");
+  return url.slice(0, 40).concat("...");
 }
 
 export default async function UrlsList({
-  query,
+  query = "",
   filter,
 }: {
   query: string;
@@ -53,7 +53,7 @@ export default async function UrlsList({
   let error: Error | null = null;
 
   try {
-    urls = await fetchFilteredUrls(query.toLowerCase(), filter);
+    urls = await fetchFilteredUrls(filter, query.toLowerCase());
   } catch (err) {
     error = err as Error;
   }
