@@ -6,7 +6,12 @@ import TableFilter from "../TableFilter/TableFilter";
 import RefreshButton from "../RefreshButton/RefreshButton";
 
 async function fetchFilteredUrls(filter: string, query?: string) {
-  const response = await fetch(`${process.env.BASE_URL}/api/urls`);
+  const response = await fetch(`${process.env.BASE_URL}/api/urls`, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache',
+    },
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch urls");

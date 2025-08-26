@@ -1,23 +1,27 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { refreshUrlsData } from "@/app/serverActions/RefreshUrlsAction";
 
 export default function RefreshButton() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRefresh = async () => {
     setIsLoading(true);
-    router.refresh();
-    setIsLoading(false);
+    try {
+      await refreshUrlsData();
+    } catch (error) {
+      console.error("Failed to refresh data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <button
       onClick={handleRefresh}
       disabled={isLoading}
-      className="btn btn-outline btn-sm"
+      className="btn btn-sm"
       title="Refresh data"
     >
       <svg

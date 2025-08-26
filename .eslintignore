@@ -1,0 +1,29 @@
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+
+# Test directories
+**/tests/
+**/test/
+**/__tests__/
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Build outputs
+.next/
+out/
+dist/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

@@ -20,7 +20,7 @@ export default async function Home({
             <h1 className="text-center flex-1">Custom URL 😎</h1>
             <LoginButton />
           </div>
-          
+
           <Form />
           <UrlsList query={query} filter={filter} />
         </div>

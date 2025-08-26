@@ -1,22 +1,19 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { useRouter } from "next/navigation";
-import { vi, describe, it, expect, beforeEach, afterEach } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { vi, describe, it, expect, beforeEach, afterEach, MockedFunction } from "vitest";
 import RefreshButton from "./RefreshButton";
 
-// Mock useRouter
-vi.mock("next/navigation", () => ({
-  useRouter: vi.fn(),
+// Mock server action
+vi.mock("@/app/serverActions/RefreshUrlsAction", () => ({
+  refreshUrlsData: vi.fn(),
 }));
 
-const mockPush = vi.fn();
-const mockRefresh = vi.fn();
+import { refreshUrlsData } from "@/app/serverActions/RefreshUrlsAction";
+
+const mockRefreshUrlsData = refreshUrlsData as MockedFunction<typeof refreshUrlsData>;
 
 describe("RefreshButton", () => {
   beforeEach(() => {
-    (useRouter as any).mockReturnValue({
-      push: mockPush,
-      refresh: mockRefresh,
-    });
+    vi.clearAllMocks();
   });
 
   afterEach(() => {
@@ -28,25 +25,35 @@ describe("RefreshButton", () => {
 
     const button = screen.getByRole("button");
     expect(button).toBeInTheDocument();
-    expect(button).toHaveClass("btn", "btn-outline", "btn-sm");
+    expect(button).toHaveClass("btn", "btn-sm");
   });
 
-  it("calls router.refresh when clicked", () => {
+  it("calls refreshUrlsData when clicked", async () => {
+    mockRefreshUrlsData.mockResolvedValue();
+
     render(<RefreshButton />);
 
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
-    expect(mockRefresh).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(mockRefreshUrlsData).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it("shows loading state when clicked", () => {
+  it("shows loading state when clicked", async () => {
+    mockRefreshUrlsData.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 100)));
+
     render(<RefreshButton />);
 
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
     expect(button).toBeDisabled();
+
+    await waitFor(() => {
+      expect(button).not.toBeDisabled();
+    });
   });
 
   it("has correct title attribute", () => {
@@ -64,7 +71,9 @@ describe("RefreshButton", () => {
     expect(svg).toHaveClass("h-4", "w-4");
   });
 
-  it("applies animate-spin class when loading", () => {
+  it("applies animate-spin class when loading", async () => {
+    mockRefreshUrlsData.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 100)));
+
     render(<RefreshButton />);
 
     const button = screen.getByRole("button");
@@ -73,5 +82,26 @@ describe("RefreshButton", () => {
     fireEvent.click(button);
 
     expect(svg).toHaveClass("animate-spin");
+
+    await waitFor(() => {
+      expect(svg).not.toHaveClass("animate-spin");
+    });
+  });
+
+  it("handles errors gracefully", async () => {
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    mockRefreshUrlsData.mockRejectedValue(new Error("Network error"));
+
+    render(<RefreshButton />);
+
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(consoleSpy).toHaveBeenCalledWith("Failed to refresh data:", expect.any(Error));
+      expect(button).not.toBeDisabled();
+    });
+
+    consoleSpy.mockRestore();
   });
 });
