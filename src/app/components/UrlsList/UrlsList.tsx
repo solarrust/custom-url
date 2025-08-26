@@ -3,6 +3,7 @@ import DeleteButton from "../DeleteButton/DeleteButton";
 import ErrorAlert from "../ErrorAlert/ErrorAlert";
 import Search from "../Search/Search";
 import TableFilter from "../TableFilter/TableFilter";
+import RefreshButton from "../RefreshButton/RefreshButton";
 
 async function fetchFilteredUrls(filter: string, query?: string) {
   const response = await fetch(`${process.env.BASE_URL}/api/urls`);
@@ -60,9 +61,10 @@ export default async function UrlsList({
 
   return (
     <>
-      <h2 className="text-center mt-16">All custom URLs</h2>
+      <h2 className="text-center mt-16 mb-4">All custom URLs</h2>
 
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
+        <RefreshButton />
         <Search placeholder="Search by URL" />
       </div>
 

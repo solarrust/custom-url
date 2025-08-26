@@ -1,5 +1,6 @@
 import { UrlShortenerService } from "@/services/UrlShortenerService";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 async function fetchOriginalUrl(url: string) {
   const urlService = new UrlShortenerService();
@@ -13,6 +14,7 @@ async function increaseVisitsCount(url: string) {
   const id = urlData?._id as string;
 
   await urlService.incrementVisitsCount(id);
+  revalidatePath("/");
 }
 
 export default async function urlRedirect({
