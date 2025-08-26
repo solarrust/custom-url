@@ -21,6 +21,9 @@ export default async function urlRedirect({
   params: { id: string };
 }) {
   const original = await fetchOriginalUrl(`/${params.id}`);
+
+  console.log({ original });
+
   if (original) {
     await increaseVisitsCount(`/${params.id}`);
 

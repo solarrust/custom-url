@@ -1,6 +1,7 @@
 import Footer from "./components/Footer/Footer";
 import Form from "./components/Form/Form";
 import UrlsList from "./components/UrlsList/UrlsList";
+import LoginButton from "./components/LoginButton/LoginButton";
 
 export default async function Home({
   searchParams,
@@ -13,7 +14,10 @@ export default async function Home({
   return (
     <>
       <div className="p-8 max-w-screen-xl w-4/5 font-sans prose mx-auto">
-        <h1 className="text-center mt-16">Custom URL 😎</h1>
+        <div className="flex justify-between items-center mt-16 mb-8">
+          <h1 className="text-center flex-1">Custom URL 😎</h1>
+          <LoginButton />
+        </div>
         <Form />
 
         <UrlsList query={query} filter={filter} />

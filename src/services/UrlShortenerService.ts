@@ -23,7 +23,10 @@ export class UrlShortenerService {
     let shortUrl = shortPart;
 
     if (!shortPart) {
-      const nanoid = customAlphabet(originalUrl.replace(/\W/g, ""), 5);
+      const nanoid = customAlphabet(
+        originalUrl.replace(/\W/g, "").toLocaleLowerCase(),
+        5
+      );
       shortUrl = nanoid();
       url = await this.urlRepository.getUrlByShortUrl(shortUrl);
 
